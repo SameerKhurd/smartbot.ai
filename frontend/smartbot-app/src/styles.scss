@@ -1,0 +1,29 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+@import "bootstrap/scss/bootstrap";
+
+// @font-face {
+//   font-family: "VarelaRound";
+//   src: url("assets/fonts/varela-round/VarelaRound-Regular.ttf")
+//     format("truetype");
+//   font-weight: normal;
+//   font-style: normal;
+// }
+
+.bg-cl {
+  background-color: #f8f7f3;
+}
+
+.custom-font {
+  font-family: VarelaRound, Arial, Helvetica, sans-serif;
+}
+
+.text-cl {
+  color: #296d65;
+}
+
+html {
+  scroll-padding-top: 70px; /* height of sticky header */
+  zoom: 90%;
+}

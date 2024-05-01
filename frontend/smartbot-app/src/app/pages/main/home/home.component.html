@@ -1,0 +1,143 @@
+<div class="si-layout-fixed-height h-100 m-4 bg-cl">
+  <ng-container *ngIf="!messageList.length; else messagesTemplate">
+    <br />
+    <br />
+
+    <div class="d-flex justify-content-center">
+      <!-- <div class="lottie-animation" style="width: 450px; height: 450px">
+      <ng-lottie [options]="welcomeLottieOptions"></ng-lottie>
+    </div> -->
+      <div
+        class="display-1 element-chat-filled p-4 m-4 rounded-circle text-primary"
+      ></div>
+    </div>
+
+    <div class="container-sm" style="text-align: center">
+      <div class="display-4 text-secondary">
+        <strong> Chat with your data</strong>
+      </div>
+      <br />
+      <br />
+      <div class="si-h2 pt-4 text-secondary">
+        Ask anything or try an example
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <div class="row chat-width mt-8 px-6">
+        <div class="col-4" *ngFor="let sampleQuestion of sampleQuestions">
+          <div
+            class="bg-base-1 clickable rounded-3 p-5 pb-8 m-2 si-body-1 elevation-1"
+            (click)="onSampleQuestionSelect(sampleQuestion)"
+          >
+            {{ sampleQuestion }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Messages -->
+  <ng-template #messagesTemplate>
+    <div class="d-flex flex-row-reverse p-4">
+      <a class="text-primary me-4" title="Clear chat" (click)="onClearChat()">
+        <i class="icon element-delete me-2"></i>
+        <span class="si-title-2">Clear chat</span>
+      </a>
+    </div>
+
+    <div
+      #scrollMe
+      class="container chat-width-main si-layout-fixed-height h-100"
+      [scrollTop]="scrollMe.scrollHeight"
+    >
+      <br />
+
+      <ng-container *ngFor="let message of messageList">
+        <ng-container *ngIf="message.role === 'system'; else userMessage">
+          <div class="d-flex flex-row my-4">
+            <div class="mx-6 my-4 rounded-circle">
+              <img
+                src="https://cdn-icons-png.flaticon.com/128/1602/1602098.png?ga=GA1.1.94249623.1694528187"
+                class="avatar mb-auto"
+                alt="avatar"
+              />
+            </div>
+
+            <div
+              class="system-message si-body-1 elevation-1 p-4 rounded-2 mt-3 mb-auto text-left"
+            >
+              {{ message.content }}
+
+              <ng-container *ngIf="message?.image">
+                <br />
+                <img
+                  class="py-4 px-2"
+                  [src]="message.image"
+                  alt="Image Source"
+                />
+              </ng-container>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #userMessage>
+          <div class="d-flex flex-row-reverse my-4">
+            <span class="mx-6 my-4 rounded-circle">
+              <img
+                src="https://cdn-icons-png.flaticon.com/128/1941/1941389.png?ga=GA1.1.94249623.1694528187"
+                class="avatar"
+                alt="avatar"
+              />
+            </span>
+
+            <div
+              class="user-message si-body-1 elevation-1 p-4 rounded-2 mt-3 mb-auto text-"
+            >
+              {{ message.content }}
+            </div>
+          </div>
+        </ng-template>
+      </ng-container>
+      <div *ngIf="messageLoading" class="d-flex flex-row my-4">
+        <div class="mx-6 my-4 rounded-circle">
+          <img
+            src="https://cdn-icons-png.flaticon.com/128/1602/1602098.png?ga=GA1.1.94249623.1694528187"
+            class="avatar mb-auto"
+            alt="avatar"
+          />
+        </div>
+
+        <div
+          class="system-message si-body-1 elevation-1 p-4 rounded-2 mt-3 mb-auto text-left"
+        >
+          <!-- <si-loading-spinner
+            class="custom-loading-spinner"
+          ></si-loading-spinner> -->
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>
+
+<div class="fixed-bottom border container chat-width">
+  <div class="elevation-1 px-6 py-4 m-6 rounded-3 bg-base-1">
+    <div class="row">
+      <div class="col-11">
+        <textarea
+          type="text"
+          class="form-control my-4 p-4 rounded-3 rounded bg-base-0"
+          rows="4"
+          placeholder="Ask your question here..."
+          [(ngModel)]="query"
+        ></textarea>
+      </div>
+      <div class="col-1">
+        <button
+          class="btn btn-circle btn-lg btn-tertiary element-double-right"
+          title="Send"
+          (click)="onSend()"
+        ></button>
+      </div>
+    </div>
+  </div>
+</div>
